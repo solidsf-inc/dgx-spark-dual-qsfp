@@ -1,0 +1,887 @@
+{
+  "complete": false,
+  "completed_trials": 14,
+  "config_fingerprint_sha256": "04ac0b836970e47c27c769b531739fb6b03d3d7cc60890aac126aec201711a8f",
+  "finished_at": "2026-08-14T03:30:10.354550Z",
+  "metadata": [
+    {
+      "driver": "mlx5_core",
+      "firmware": "28.45.4028",
+      "kernel": "6.17.0-1029-nvidia",
+      "label": "head",
+      "perftest_version": "Version: 6.20",
+      "role": "head"
+    },
+    {
+      "driver": "mlx5_core",
+      "firmware": "28.45.4028",
+      "kernel": "6.17.0-1029-nvidia",
+      "label": "worker",
+      "perftest_version": "Version: 6.20",
+      "role": "worker"
+    }
+  ],
+  "metric": "unidirectional host-memory RDMA write payload bandwidth",
+  "pair_label": "pair-b",
+  "parameters": {
+    "cooldown_seconds": 5.0,
+    "directions": [
+      "worker-to-head"
+    ],
+    "duration_seconds": 30,
+    "message_sizes": [
+      65536
+    ],
+    "modes": [
+      "diagonal-a"
+    ],
+    "qps_values": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "repeats": 5,
+    "schedule": "interleaved",
+    "tx_depths": [
+      128
+    ]
+  },
+  "pcie_gen5_x4_raw_gbps_per_domain": 126.030769,
+  "planned_trials": 20,
+  "schema_version": 1,
+  "started_at": "2026-08-14T03:20:46.391551Z",
+  "suite_version": "0.1.0",
+  "summaries": [
+    {
+      "direction": "worker-to-head",
+      "max_gbps": 211.79,
+      "mean_gbps": 211.33,
+      "median_fraction_of_two_x4_raw_ceiling": 0.838188,
+      "median_gbps": 211.275,
+      "message_size_bytes": 65536,
+      "min_gbps": 210.98,
+      "mode": "diagonal-a",
+      "population_stdev_gbps": 0.314086,
+      "qps": 1,
+      "repeats": 4,
+      "tx_depth": 128
+    },
+    {
+      "direction": "worker-to-head",
+      "max_gbps": 222.9,
+      "mean_gbps": 222.8625,
+      "median_fraction_of_two_x4_raw_ceiling": 0.884229,
+      "median_gbps": 222.88,
+      "message_size_bytes": 65536,
+      "min_gbps": 222.79,
+      "mode": "diagonal-a",
+      "population_stdev_gbps": 0.042647,
+      "qps": 2,
+      "repeats": 4,
+      "tx_depth": 128
+    },
+    {
+      "direction": "worker-to-head",
+      "max_gbps": 223.38,
+      "mean_gbps": 223.37,
+      "median_fraction_of_two_x4_raw_ceiling": 0.886172,
+      "median_gbps": 223.37,
+      "message_size_bytes": 65536,
+      "min_gbps": 223.36,
+      "mode": "diagonal-a",
+      "population_stdev_gbps": 0.008165,
+      "qps": 4,
+      "repeats": 3,
+      "tx_depth": 128
+    },
+    {
+      "direction": "worker-to-head",
+      "max_gbps": 223.25,
+      "mean_gbps": 223.226667,
+      "median_fraction_of_two_x4_raw_ceiling": 0.885577,
+      "median_gbps": 223.22,
+      "message_size_bytes": 65536,
+      "min_gbps": 223.21,
+      "mode": "diagonal-a",
+      "population_stdev_gbps": 0.016997,
+      "qps": 8,
+      "repeats": 3,
+      "tx_depth": 128
+    }
+  ],
+  "trials": [
+    {
+      "aggregate_GBps": 26.38875,
+      "aggregate_gbps": 211.11,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:21:21.969589Z",
+      "fraction_of_two_x4_raw_ceiling": 0.837534,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.11,
+      "path_spread_percent_of_mean": 0.104211,
+      "paths": [
+        {
+          "average_gbps": 105.5,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3219503,
+          "message_rate_mpps": 0.201217,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 105.61,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3223008,
+          "message_rate_mpps": 0.201437,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 1,
+      "started_at": "2026-08-14T03:20:48.413627Z",
+      "trial": 1,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 27.86,
+      "aggregate_gbps": 222.88,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:22:03.641903Z",
+      "fraction_of_two_x4_raw_ceiling": 0.884229,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.22,
+      "path_spread_percent_of_mean": 0.197416,
+      "paths": [
+        {
+          "average_gbps": 111.33,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3397366,
+          "message_rate_mpps": 0.212336,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 111.55,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3404328,
+          "message_rate_mpps": 0.212773,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 2,
+      "started_at": "2026-08-14T03:21:30.006149Z",
+      "trial": 1,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 27.9225,
+      "aggregate_gbps": 223.38,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:22:43.999578Z",
+      "fraction_of_two_x4_raw_ceiling": 0.886212,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.0,
+      "path_spread_percent_of_mean": 0.0,
+      "paths": [
+        {
+          "average_gbps": 111.69,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3408626,
+          "message_rate_mpps": 0.213039,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 111.69,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3408407,
+          "message_rate_mpps": 0.213027,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 4,
+      "started_at": "2026-08-14T03:22:10.343735Z",
+      "trial": 1,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 27.90625,
+      "aggregate_gbps": 223.25,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:23:24.925274Z",
+      "fraction_of_two_x4_raw_ceiling": 0.885696,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.07,
+      "path_spread_percent_of_mean": 0.06271,
+      "paths": [
+        {
+          "average_gbps": 111.59,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3405413,
+          "message_rate_mpps": 0.212838,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 111.66,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3407448,
+          "message_rate_mpps": 0.212965,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 8,
+      "started_at": "2026-08-14T03:22:51.323902Z",
+      "trial": 1,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 26.47375,
+      "aggregate_gbps": 211.79,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:24:05.387066Z",
+      "fraction_of_two_x4_raw_ceiling": 0.840231,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.17,
+      "path_spread_percent_of_mean": 0.160536,
+      "paths": [
+        {
+          "average_gbps": 105.81,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3229111,
+          "message_rate_mpps": 0.20182,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 105.98,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3234201,
+          "message_rate_mpps": 0.202138,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 1,
+      "started_at": "2026-08-14T03:23:31.715415Z",
+      "trial": 2,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 27.86,
+      "aggregate_gbps": 222.88,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:24:46.441589Z",
+      "fraction_of_two_x4_raw_ceiling": 0.884229,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.26,
+      "path_spread_percent_of_mean": 0.233309,
+      "paths": [
+        {
+          "average_gbps": 111.31,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3397002,
+          "message_rate_mpps": 0.212311,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 111.57,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3404942,
+          "message_rate_mpps": 0.212811,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 2,
+      "started_at": "2026-08-14T03:24:12.723341Z",
+      "trial": 2,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 27.92125,
+      "aggregate_gbps": 223.37,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:25:26.830901Z",
+      "fraction_of_two_x4_raw_ceiling": 0.886172,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.01,
+      "path_spread_percent_of_mean": 0.008954,
+      "paths": [
+        {
+          "average_gbps": 111.68,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3408171,
+          "message_rate_mpps": 0.213011,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 111.69,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3408423,
+          "message_rate_mpps": 0.213027,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 4,
+      "started_at": "2026-08-14T03:24:53.159550Z",
+      "trial": 2,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 27.90125,
+      "aggregate_gbps": 223.21,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:26:07.858561Z",
+      "fraction_of_two_x4_raw_ceiling": 0.885538,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.09,
+      "path_spread_percent_of_mean": 0.080642,
+      "paths": [
+        {
+          "average_gbps": 111.56,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3404562,
+          "message_rate_mpps": 0.212787,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 111.65,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3407383,
+          "message_rate_mpps": 0.212963,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 8,
+      "started_at": "2026-08-14T03:25:34.301014Z",
+      "trial": 2,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 26.3725,
+      "aggregate_gbps": 210.98,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:26:48.273860Z",
+      "fraction_of_two_x4_raw_ceiling": 0.837018,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.1,
+      "path_spread_percent_of_mean": 0.094796,
+      "paths": [
+        {
+          "average_gbps": 105.44,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3217636,
+          "message_rate_mpps": 0.201103,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 105.54,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3220916,
+          "message_rate_mpps": 0.201308,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 1,
+      "started_at": "2026-08-14T03:26:14.684500Z",
+      "trial": 3,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 27.8625,
+      "aggregate_gbps": 222.9,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:27:28.447673Z",
+      "fraction_of_two_x4_raw_ceiling": 0.884308,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.24,
+      "path_spread_percent_of_mean": 0.215343,
+      "paths": [
+        {
+          "average_gbps": 111.33,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3397594,
+          "message_rate_mpps": 0.212348,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 111.57,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3404984,
+          "message_rate_mpps": 0.212811,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 2,
+      "started_at": "2026-08-14T03:26:55.051181Z",
+      "trial": 3,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 27.92,
+      "aggregate_gbps": 223.36,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:28:08.820835Z",
+      "fraction_of_two_x4_raw_ceiling": 0.886133,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.02,
+      "path_spread_percent_of_mean": 0.017908,
+      "paths": [
+        {
+          "average_gbps": 111.67,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3407882,
+          "message_rate_mpps": 0.212992,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 111.69,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3408453,
+          "message_rate_mpps": 0.21303,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 4,
+      "started_at": "2026-08-14T03:27:35.263027Z",
+      "trial": 3,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 27.9025,
+      "aggregate_gbps": 223.22,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:28:49.474035Z",
+      "fraction_of_two_x4_raw_ceiling": 0.885577,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.08,
+      "path_spread_percent_of_mean": 0.071678,
+      "paths": [
+        {
+          "average_gbps": 111.57,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3404752,
+          "message_rate_mpps": 0.212798,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 111.65,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3407385,
+          "message_rate_mpps": 0.212963,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 8,
+      "started_at": "2026-08-14T03:28:15.868540Z",
+      "trial": 3,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 26.43,
+      "aggregate_gbps": 211.44,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:29:29.705315Z",
+      "fraction_of_two_x4_raw_ceiling": 0.838843,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.14,
+      "path_spread_percent_of_mean": 0.132425,
+      "paths": [
+        {
+          "average_gbps": 105.65,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3224050,
+          "message_rate_mpps": 0.201505,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 105.79,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3228402,
+          "message_rate_mpps": 0.201775,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 1,
+      "started_at": "2026-08-14T03:28:56.170294Z",
+      "trial": 4,
+      "tx_depth": 128
+    },
+    {
+      "aggregate_GBps": 27.84875,
+      "aggregate_gbps": 222.79,
+      "direction": "worker-to-head",
+      "duration_seconds": 30,
+      "finished_at": "2026-08-14T03:30:10.354486Z",
+      "fraction_of_two_x4_raw_ceiling": 0.883871,
+      "message_size_bytes": 65536,
+      "mode": "diagonal-a",
+      "path_count": 2,
+      "path_spread_gbps": 0.29,
+      "path_spread_percent_of_mean": 0.260335,
+      "paths": [
+        {
+          "average_gbps": 111.25,
+          "bytes": 65536,
+          "client_cpu": 5,
+          "control_port": 18515,
+          "iterations": 3394948,
+          "message_rate_mpps": 0.212183,
+          "path": "p0-d0",
+          "pcie_domain": 0,
+          "peak_gbps": 0.0,
+          "physical_port": 0,
+          "rdma_device": "rocep1s0f0",
+          "server_cpu": 5
+        },
+        {
+          "average_gbps": 111.54,
+          "bytes": 65536,
+          "client_cpu": 6,
+          "control_port": 18516,
+          "iterations": 3403970,
+          "message_rate_mpps": 0.21275,
+          "path": "p1-d2",
+          "pcie_domain": 2,
+          "peak_gbps": 0.0,
+          "physical_port": 1,
+          "rdma_device": "roceP2p1s0f1",
+          "server_cpu": 6
+        }
+      ],
+      "pcie_domains": [
+        0,
+        2
+      ],
+      "physical_ports": [
+        0,
+        1
+      ],
+      "qps": 2,
+      "started_at": "2026-08-14T03:29:36.734043Z",
+      "trial": 4,
+      "tx_depth": 128
+    }
+  ],
+  "two_domain_raw_ceiling_gbps": 252.061538,
+  "units": "Gbit/s (decimal)"
+}

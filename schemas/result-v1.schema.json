@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "result-v1.schema.json",
+  "title": "DGX Spark dual-QSFP historical benchmark result v1",
+  "description": "Strict schema for the historical schema_version 1 evidence files. Version 1 records trial completion but has no postflight acceptance decision.",
+  "$comment": "For version 1 producers, complete is true exactly when completed_trials equals planned_trials. Draft 2020-12 cannot compare two arbitrary numeric instance properties, so consumers must enforce that equality in addition to this structural schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "suite_version",
+    "pair_label",
+    "config_fingerprint_sha256",
+    "started_at",
+    "finished_at",
+    "complete",
+    "completed_trials",
+    "planned_trials",
+    "metric",
+    "units",
+    "pcie_gen5_x4_raw_gbps_per_domain",
+    "two_domain_raw_ceiling_gbps",
+    "metadata",
+    "parameters",
+    "trials",
+    "summaries"
+  ],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "suite_version": { "$ref": "#/$defs/suiteVersion" },
+    "pair_label": { "$ref": "#/$defs/publicLabel" },
+    "config_fingerprint_sha256": { "$ref": "#/$defs/sha256" },
+    "started_at": { "$ref": "#/$defs/timestamp" },
+    "finished_at": { "$ref": "#/$defs/timestamp" },
+    "complete": { "type": "boolean" },
+    "completed_trials": { "$ref": "#/$defs/nonNegativeInteger" },
+    "planned_trials": { "$ref": "#/$defs/positiveInteger" },
+    "metric": { "const": "unidirectional host-memory RDMA write payload bandwidth" },
+    "units": { "const": "Gbit/s (decimal)" },
+    "pcie_gen5_x4_raw_gbps_per_domain": { "const": 126.030769 },
+    "two_domain_raw_ceiling_gbps": { "const": 252.061538 },
+    "metadata": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "#/$defs/nodeMetadata" }
+    },
+    "parameters": { "$ref": "#/$defs/parametersV1" },
+    "trials": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/trial" }
+    },
+    "summaries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/summary" }
+    }
+  },
+  "$defs": {
+    "nonNegativeInteger": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "positiveInteger": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "nonNegativeNumber": {
+      "type": "number",
+      "minimum": 0
+    },
+    "publicLabel": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_.-]+$"
+    },
+    "suiteVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "Z$"
+    },
+    "direction": {
+      "enum": ["worker-to-head", "head-to-worker"]
+    },
+    "mode": {
+      "enum": [
+        "single-p0-d0",
+        "single-p0-d2",
+        "single-p1-d0",
+        "single-p1-d2",
+        "same-cage-p0",
+        "same-cage-p1",
+        "same-domain-d0",
+        "same-domain-d2",
+        "diagonal-a",
+        "diagonal-b",
+        "all-four"
+      ]
+    },
+    "nodeMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "label", "kernel", "perftest_version", "driver", "firmware"],
+      "properties": {
+        "role": { "enum": ["head", "worker"] },
+        "label": { "$ref": "#/$defs/publicLabel" },
+        "kernel": { "type": "string", "minLength": 1 },
+        "perftest_version": { "type": "string", "minLength": 1 },
+        "driver": { "type": "string", "minLength": 1 },
+        "firmware": { "type": "string", "minLength": 1 }
+      }
+    },
+    "parametersV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modes",
+        "directions",
+        "message_sizes",
+        "qps_values",
+        "tx_depths",
+        "duration_seconds",
+        "repeats",
+        "cooldown_seconds",
+        "schedule"
+      ],
+      "properties": {
+        "modes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/mode" }
+        },
+        "directions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/direction" }
+        },
+        "message_sizes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1, "maximum": 1073741824 }
+        },
+        "qps_values": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1, "maximum": 128 }
+        },
+        "tx_depths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1, "maximum": 16384 }
+        },
+        "duration_seconds": { "type": "integer", "minimum": 2, "maximum": 3600 },
+        "repeats": { "type": "integer", "minimum": 1, "maximum": 1000 },
+        "cooldown_seconds": { "type": "number", "minimum": 0, "maximum": 3600 },
+        "schedule": { "enum": ["interleaved", "grouped"] }
+      }
+    },
+    "pathResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "physical_port",
+        "pcie_domain",
+        "rdma_device",
+        "control_port",
+        "server_cpu",
+        "client_cpu",
+        "bytes",
+        "iterations",
+        "peak_gbps",
+        "average_gbps",
+        "message_rate_mpps"
+      ],
+      "properties": {
+        "path": { "$ref": "#/$defs/publicLabel" },
+        "physical_port": { "type": "integer", "enum": [0, 1] },
+        "pcie_domain": { "type": "integer", "enum": [0, 2] },
+        "rdma_device": { "$ref": "#/$defs/publicLabel" },
+        "control_port": { "type": "integer", "minimum": 1, "maximum": 65535 },
+        "server_cpu": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "client_cpu": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "bytes": { "type": "integer", "minimum": 1, "maximum": 1073741824 },
+        "iterations": { "$ref": "#/$defs/positiveInteger" },
+        "peak_gbps": { "$ref": "#/$defs/nonNegativeNumber" },
+        "average_gbps": { "$ref": "#/$defs/nonNegativeNumber" },
+        "message_rate_mpps": { "$ref": "#/$defs/nonNegativeNumber" }
+      }
+    },
+    "trial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "started_at",
+        "finished_at",
+        "trial",
+        "mode",
+        "direction",
+        "duration_seconds",
+        "message_size_bytes",
+        "qps",
+        "tx_depth",
+        "path_count",
+        "physical_ports",
+        "pcie_domains",
+        "paths",
+        "aggregate_gbps",
+        "aggregate_GBps",
+        "path_spread_gbps",
+        "path_spread_percent_of_mean",
+        "fraction_of_two_x4_raw_ceiling"
+      ],
+      "properties": {
+        "started_at": { "$ref": "#/$defs/timestamp" },
+        "finished_at": { "$ref": "#/$defs/timestamp" },
+        "trial": { "$ref": "#/$defs/positiveInteger" },
+        "mode": { "$ref": "#/$defs/mode" },
+        "direction": { "$ref": "#/$defs/direction" },
+        "duration_seconds": { "type": "integer", "minimum": 2, "maximum": 3600 },
+        "message_size_bytes": { "type": "integer", "minimum": 1, "maximum": 1073741824 },
+        "qps": { "type": "integer", "minimum": 1, "maximum": 128 },
+        "tx_depth": { "type": "integer", "minimum": 1, "maximum": 16384 },
+        "path_count": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "physical_ports": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": { "type": "integer", "enum": [0, 1] }
+        },
+        "pcie_domains": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": { "type": "integer", "enum": [0, 2] }
+        },
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "items": { "$ref": "#/$defs/pathResult" }
+        },
+        "aggregate_gbps": { "$ref": "#/$defs/nonNegativeNumber" },
+        "aggregate_GBps": { "$ref": "#/$defs/nonNegativeNumber" },
+        "path_spread_gbps": { "$ref": "#/$defs/nonNegativeNumber" },
+        "path_spread_percent_of_mean": { "$ref": "#/$defs/nonNegativeNumber" },
+        "fraction_of_two_x4_raw_ceiling": { "$ref": "#/$defs/nonNegativeNumber" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "direction",
+        "message_size_bytes",
+        "qps",
+        "tx_depth",
+        "repeats",
+        "median_gbps",
+        "mean_gbps",
+        "min_gbps",
+        "max_gbps",
+        "population_stdev_gbps",
+        "median_fraction_of_two_x4_raw_ceiling"
+      ],
+      "properties": {
+        "mode": { "$ref": "#/$defs/mode" },
+        "direction": { "$ref": "#/$defs/direction" },
+        "message_size_bytes": { "type": "integer", "minimum": 1, "maximum": 1073741824 },
+        "qps": { "type": "integer", "minimum": 1, "maximum": 128 },
+        "tx_depth": { "type": "integer", "minimum": 1, "maximum": 16384 },
+        "repeats": { "type": "integer", "minimum": 1, "maximum": 1000 },
+        "median_gbps": { "$ref": "#/$defs/nonNegativeNumber" },
+        "mean_gbps": { "$ref": "#/$defs/nonNegativeNumber" },
+        "min_gbps": { "$ref": "#/$defs/nonNegativeNumber" },
+        "max_gbps": { "$ref": "#/$defs/nonNegativeNumber" },
+        "population_stdev_gbps": { "$ref": "#/$defs/nonNegativeNumber" },
+        "median_fraction_of_two_x4_raw_ceiling": { "$ref": "#/$defs/nonNegativeNumber" }
+      }
+    }
+  }
+}

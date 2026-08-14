@@ -1,0 +1,289 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "result-v2.schema.json",
+  "title": "DGX Spark dual-QSFP accepted benchmark result v2",
+  "description": "Strict publication schema for a schema_version 2 benchmark result that completed postflight validation and was accepted with no new link-error counters.",
+  "$comment": "An accepted result must also satisfy completed_trials equals planned_trials and the schedule/trial/summary cardinalities implied by parameters. Draft 2020-12 cannot compare arbitrary instance properties, so consumers must enforce those cross-field equalities in addition to this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "suite_version",
+    "pair_label",
+    "config_fingerprint_sha256",
+    "started_at",
+    "finished_at",
+    "complete",
+    "accepted",
+    "run_status",
+    "completed_trials",
+    "planned_trials",
+    "metric",
+    "units",
+    "pcie_gen5_x4_raw_gbps_per_domain",
+    "two_domain_raw_ceiling_gbps",
+    "metadata",
+    "validation",
+    "parameters",
+    "schedule_plan",
+    "trials",
+    "summaries"
+  ],
+  "properties": {
+    "schema_version": { "const": 2 },
+    "suite_version": { "$ref": "result-v1.schema.json#/$defs/suiteVersion" },
+    "pair_label": { "$ref": "result-v1.schema.json#/$defs/publicLabel" },
+    "config_fingerprint_sha256": { "$ref": "result-v1.schema.json#/$defs/sha256" },
+    "started_at": { "$ref": "result-v1.schema.json#/$defs/timestamp" },
+    "finished_at": { "$ref": "result-v1.schema.json#/$defs/timestamp" },
+    "complete": { "const": true },
+    "accepted": { "const": true },
+    "run_status": { "const": "accepted" },
+    "completed_trials": { "$ref": "result-v1.schema.json#/$defs/positiveInteger" },
+    "planned_trials": { "$ref": "result-v1.schema.json#/$defs/positiveInteger" },
+    "metric": { "const": "unidirectional host-memory RDMA write payload bandwidth" },
+    "units": { "const": "Gbit/s (decimal)" },
+    "pcie_gen5_x4_raw_gbps_per_domain": { "const": 126.030769 },
+    "two_domain_raw_ceiling_gbps": { "const": 252.061538 },
+    "metadata": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "$ref": "result-v1.schema.json#/$defs/nodeMetadata" }
+    },
+    "validation": { "$ref": "#/$defs/acceptedValidation" },
+    "parameters": { "$ref": "#/$defs/parametersV2" },
+    "schedule_plan": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/scheduleEntry" }
+    },
+    "trials": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "result-v1.schema.json#/$defs/trial" }
+    },
+    "summaries": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "result-v1.schema.json#/$defs/summary" }
+    }
+  },
+  "$defs": {
+    "parametersV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "modes",
+        "directions",
+        "message_sizes",
+        "qps_values",
+        "tx_depths",
+        "duration_seconds",
+        "repeats",
+        "cooldown_seconds",
+        "schedule",
+        "schedule_seed"
+      ],
+      "properties": {
+        "modes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "result-v1.schema.json#/$defs/mode" }
+        },
+        "directions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "result-v1.schema.json#/$defs/direction" }
+        },
+        "message_sizes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1, "maximum": 1073741824 }
+        },
+        "qps_values": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1, "maximum": 128 }
+        },
+        "tx_depths": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "integer", "minimum": 1, "maximum": 16384 }
+        },
+        "duration_seconds": { "type": "integer", "minimum": 2, "maximum": 3600 },
+        "repeats": { "type": "integer", "minimum": 1, "maximum": 1000 },
+        "cooldown_seconds": { "type": "number", "minimum": 0, "maximum": 3600 },
+        "schedule": { "enum": ["interleaved", "grouped"] },
+        "schedule_seed": { "type": "integer", "minimum": 0, "maximum": 4294967295 }
+      }
+    },
+    "scheduleEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "position",
+        "mode",
+        "direction",
+        "message_size_bytes",
+        "qps",
+        "tx_depth",
+        "repeat"
+      ],
+      "properties": {
+        "position": { "$ref": "result-v1.schema.json#/$defs/positiveInteger" },
+        "mode": { "$ref": "result-v1.schema.json#/$defs/mode" },
+        "direction": { "$ref": "result-v1.schema.json#/$defs/direction" },
+        "message_size_bytes": { "type": "integer", "minimum": 1, "maximum": 1073741824 },
+        "qps": { "type": "integer", "minimum": 1, "maximum": 128 },
+        "tx_depth": { "type": "integer", "minimum": 1, "maximum": 16384 },
+        "repeat": { "type": "integer", "minimum": 1, "maximum": 1000 }
+      }
+    },
+    "checkSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "warned", "failed"],
+      "properties": {
+        "passed": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "warned": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "failed": { "const": 0 }
+      }
+    },
+    "counterNames": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        { "const": "rx_crc_errors_phy" },
+        { "const": "rx_discards_phy" },
+        { "const": "rx_out_of_buffer" },
+        { "const": "rx_symbol_err_phy" },
+        { "const": "tx_discards_phy" }
+      ],
+      "items": false
+    },
+    "counterValues": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rx_crc_errors_phy",
+        "rx_discards_phy",
+        "rx_out_of_buffer",
+        "rx_symbol_err_phy",
+        "tx_discards_phy"
+      ],
+      "properties": {
+        "rx_crc_errors_phy": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "rx_discards_phy": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "rx_out_of_buffer": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "rx_symbol_err_phy": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "tx_discards_phy": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" }
+      }
+    },
+    "zeroCounterValues": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rx_crc_errors_phy",
+        "rx_discards_phy",
+        "rx_out_of_buffer",
+        "rx_symbol_err_phy",
+        "tx_discards_phy"
+      ],
+      "properties": {
+        "rx_crc_errors_phy": { "const": 0 },
+        "rx_discards_phy": { "const": 0 },
+        "rx_out_of_buffer": { "const": 0 },
+        "rx_symbol_err_phy": { "const": 0 },
+        "tx_discards_phy": { "const": 0 }
+      }
+    },
+    "counterSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_role", "path", "coverage_complete", "values"],
+      "properties": {
+        "node_role": { "enum": ["head", "worker"] },
+        "path": { "$ref": "result-v1.schema.json#/$defs/publicLabel" },
+        "coverage_complete": { "const": true },
+        "values": { "$ref": "#/$defs/counterValues" }
+      }
+    },
+    "counterSnapshotBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["counter_names", "snapshots"],
+      "properties": {
+        "counter_names": { "$ref": "#/$defs/counterNames" },
+        "snapshots": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/counterSnapshot" }
+        }
+      }
+    },
+    "acceptedCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "ok", "summary", "link_error_counters"],
+      "properties": {
+        "status": { "enum": ["passed", "passed-with-warnings"] },
+        "ok": { "const": true },
+        "summary": { "$ref": "#/$defs/checkSummary" },
+        "link_error_counters": { "$ref": "#/$defs/counterSnapshotBlock" }
+      }
+    },
+    "counterDelta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_role", "path", "values"],
+      "properties": {
+        "node_role": { "enum": ["head", "worker"] },
+        "path": { "$ref": "result-v1.schema.json#/$defs/publicLabel" },
+        "values": { "$ref": "#/$defs/zeroCounterValues" }
+      }
+    },
+    "acceptedCounterDelta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "counter_names",
+        "ok",
+        "status",
+        "deltas",
+        "positive_deltas",
+        "reset_counters"
+      ],
+      "properties": {
+        "counter_names": { "$ref": "#/$defs/counterNames" },
+        "ok": { "const": true },
+        "status": { "const": "passed" },
+        "deltas": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/counterDelta" }
+        },
+        "positive_deltas": { "type": "array", "maxItems": 0 },
+        "reset_counters": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "acceptedValidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preflight", "postflight", "link_error_counter_delta"],
+      "properties": {
+        "preflight": { "$ref": "#/$defs/acceptedCheck" },
+        "postflight": { "$ref": "#/$defs/acceptedCheck" },
+        "link_error_counter_delta": { "$ref": "#/$defs/acceptedCounterDelta" }
+      }
+    }
+  }
+}

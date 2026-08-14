@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dgx-spark-four-hca"
+dynamic = ["version"]
+description = "Dual-QSFP benchmark for one DGX Spark ConnectX-7 with four logical RoCE devices"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "solidSF, Inc." }]
+keywords = ["DGX Spark", "ConnectX-7", "RDMA", "RoCE", "QSFP", "benchmark"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: System :: Networking",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://solidsf.com/"
+Source = "https://github.com/solidsf-inc/dgx-spark-dual-qsfp"
+Issues = "https://github.com/solidsf-inc/dgx-spark-dual-qsfp/issues"
+"solidSF workspace" = "https://app.solidsf.com/"
+
+[project.scripts]
+spark-four-hca = "spark_four_hca.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.dynamic]
+version = { attr = "spark_four_hca.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

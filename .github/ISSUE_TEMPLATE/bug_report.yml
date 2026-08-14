@@ -1,0 +1,69 @@
+name: Bug report
+description: Report a reproducible problem with the standalone CLI or package
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Do not include credentials, private hostnames, addresses, raw GIDs,
+        MAC addresses, serial numbers, pair TOML, SSH configuration, or raw
+        logs. Report security issues privately as described in SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      description: Output from the installed package version mechanism or artifact name.
+    validations:
+      required: true
+  - type: dropdown
+    id: command
+    attributes:
+      label: Command
+      options:
+        - validate
+        - topology
+        - render-netplan
+        - check
+        - benchmark
+        - summarize
+        - theory
+        - packaging or installation
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Paste only minimal sanitized output.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Sanitized reproduction
+      description: Include exact local steps without private configuration or identifiers.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Python, OS/kernel, driver, firmware, perftest, and relevant package versions.
+    validations:
+      required: true
+  - type: checkboxes
+    id: hygiene
+    attributes:
+      label: Data hygiene
+      options:
+        - label: I removed credentials and private infrastructure identifiers.
+          required: true
+        - label: I did not attach pair TOML, SSH configuration, or raw perftest logs.
+          required: true

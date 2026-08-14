@@ -1,0 +1,67 @@
+name: Community reproduction
+description: Share a sanitized controlled reproduction or non-reproduction
+title: "[Reproduction]: "
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Positive, negative, and incomplete results are welcome when clearly
+        labeled. QP1 topology controls and the incomplete QP2 checkpoint are
+        separate claims. Never attach raw logs or private pair configuration.
+  - type: dropdown
+    id: result
+    attributes:
+      label: Result type
+      options:
+        - Completed QP1 topology comparison
+        - Completed QP sweep
+        - Incomplete or interrupted study
+        - Other controlled study
+    validations:
+      required: true
+  - type: input
+    id: schema
+    attributes:
+      label: Result schema, measurement acceptance, and qualification
+      description: For example, schema v3 with trials_complete and measurement_accepted true plus its separate qualification status, or schema v1 legacy.
+    validations:
+      required: true
+  - type: textarea
+    id: parameters
+    attributes:
+      label: Controlled parameters
+      description: Modes, direction, message size, QPs, TX depth, duration, repeats, cooldown, and schedule.
+    validations:
+      required: true
+  - type: textarea
+    id: statistics
+    attributes:
+      label: Aggregate statistics
+      description: Report every sample count plus median, range, and dispersion.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Known environment and unknowns
+      description: Include software, firmware, MTUs, PCIe state, cable context, and explicitly unknown fields.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Preflight and postflight
+      description: For schema v3, state trials_complete, measurement_accepted, qualification.qualified, and all-path allowlisted-counter delta status.
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Claim and privacy boundaries
+      options:
+        - label: I identify this as host-memory, unidirectional, concurrent-flow `ib_write_bw` aggregate bandwidth.
+          required: true
+        - label: I distinguish the completed QP1 comparison from exploratory QP2 evidence.
+          required: true
+        - label: I removed private identifiers and did not attach raw logs or pair TOML.
+          required: true

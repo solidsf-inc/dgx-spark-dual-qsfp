@@ -1,0 +1,302 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "result-v3-runtime.schema.json",
+  "title": "DGX Spark dual-QSFP benchmark runtime result v3",
+  "description": "Closed runtime schema for schema_version 3 checkpoints, interrupted or rejected measurements, and accepted measurements. Use result-v3.schema.json as the stricter publication gate.",
+  "$comment": "Consumers must additionally check trial/cardinality equalities and state relationships that JSON Schema cannot compare across arbitrary instance properties.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "suite_version",
+    "pair_label",
+    "config_fingerprint_sha256",
+    "implementation_fingerprint_sha256",
+    "started_at",
+    "finished_at",
+    "trials_complete",
+    "measurement_accepted",
+    "run_status",
+    "completed_trials",
+    "planned_trials",
+    "metric",
+    "units",
+    "pcie_gen5_x4_raw_gbps_per_domain",
+    "two_domain_raw_ceiling_gbps",
+    "metadata",
+    "validation",
+    "parameters",
+    "schedule_plan",
+    "trials",
+    "summaries",
+    "qualification"
+  ],
+  "properties": {
+    "schema_version": { "const": 3 },
+    "suite_version": { "$ref": "result-v1.schema.json#/$defs/suiteVersion" },
+    "pair_label": { "$ref": "result-v1.schema.json#/$defs/publicLabel" },
+    "config_fingerprint_sha256": { "$ref": "result-v1.schema.json#/$defs/sha256" },
+    "implementation_fingerprint_sha256": { "$ref": "result-v1.schema.json#/$defs/sha256" },
+    "started_at": { "$ref": "result-v1.schema.json#/$defs/timestamp" },
+    "finished_at": { "$ref": "result-v1.schema.json#/$defs/timestamp" },
+    "trials_complete": { "type": "boolean" },
+    "measurement_accepted": { "type": "boolean" },
+    "run_status": {
+      "enum": [
+        "initializing",
+        "running",
+        "awaiting-postflight",
+        "benchmark-failed",
+        "interrupted",
+        "postflight-error",
+        "link-errors-detected",
+        "postflight-failed",
+        "validation-incomplete",
+        "measurement-accepted"
+      ]
+    },
+    "completed_trials": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+    "planned_trials": { "$ref": "result-v1.schema.json#/$defs/positiveInteger" },
+    "metric": { "const": "unidirectional host-memory RDMA write payload bandwidth" },
+    "units": { "const": "Gbit/s (decimal)" },
+    "pcie_gen5_x4_raw_gbps_per_domain": { "const": 126.030769 },
+    "two_domain_raw_ceiling_gbps": { "const": 252.061538 },
+    "metadata": {
+      "type": "array",
+      "maxItems": 2,
+      "items": { "$ref": "result-v1.schema.json#/$defs/nodeMetadata" }
+    },
+    "validation": { "$ref": "#/$defs/runtimeValidation" },
+    "parameters": { "$ref": "result-v2.schema.json#/$defs/parametersV2" },
+    "schedule_plan": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "result-v2.schema.json#/$defs/scheduleEntry" }
+    },
+    "trials": {
+      "type": "array",
+      "items": { "$ref": "result-v1.schema.json#/$defs/trial" }
+    },
+    "summaries": {
+      "type": "array",
+      "items": { "$ref": "result-v1.schema.json#/$defs/summary" }
+    },
+    "qualification": {
+      "oneOf": [
+        { "$ref": "result-v3.schema.json#/$defs/qualifiedQualification" },
+        { "$ref": "result-v3.schema.json#/$defs/ineligibleQualification" },
+        { "$ref": "result-v3.schema.json#/$defs/belowFloorQualification" },
+        { "$ref": "result-v3.schema.json#/$defs/insufficientObservationQualification" },
+        { "$ref": "result-v3.schema.json#/$defs/incompleteEvidenceQualification" },
+        { "$ref": "#/$defs/pendingQualification" },
+        { "$ref": "#/$defs/unacceptedQualification" }
+      ]
+    },
+    "failure": { "$ref": "#/$defs/failure" }
+  },
+  "$defs": {
+    "safeReason": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9 _.,:/()'=-]+$"
+    },
+    "failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["error_type"],
+      "properties": {
+        "error_type": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z_][A-Za-z0-9_.]*$"
+        }
+      }
+    },
+    "runtimeCheckSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "warned", "failed"],
+      "properties": {
+        "passed": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "warned": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "failed": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" }
+      }
+    },
+    "runtimeCounterValues": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rx_crc_errors_phy": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "rx_discards_phy": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "rx_out_of_buffer": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "rx_symbol_err_phy": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" },
+        "tx_discards_phy": { "$ref": "result-v1.schema.json#/$defs/nonNegativeInteger" }
+      }
+    },
+    "runtimeCounterSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_role", "path", "coverage_complete", "values"],
+      "properties": {
+        "node_role": { "enum": ["head", "worker"] },
+        "path": { "$ref": "result-v1.schema.json#/$defs/publicLabel" },
+        "coverage_complete": { "type": "boolean" },
+        "values": { "$ref": "#/$defs/runtimeCounterValues" }
+      }
+    },
+    "runtimeCounterBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["counter_names", "snapshots"],
+      "properties": {
+        "counter_names": {
+          "type": "array",
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "rx_crc_errors_phy",
+              "rx_discards_phy",
+              "rx_out_of_buffer",
+              "rx_symbol_err_phy",
+              "tx_discards_phy"
+            ]
+          }
+        },
+        "snapshots": {
+          "type": "array",
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/runtimeCounterSnapshot" }
+        }
+      }
+    },
+    "runtimeCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "enum": [
+            "pending",
+            "passed",
+            "passed-with-warnings",
+            "failed",
+            "skipped",
+            "not-run",
+            "interrupted",
+            "error"
+          ]
+        },
+        "ok": { "type": "boolean" },
+        "summary": { "$ref": "#/$defs/runtimeCheckSummary" },
+        "link_error_counters": { "$ref": "#/$defs/runtimeCounterBlock" },
+        "reason": { "$ref": "#/$defs/safeReason" },
+        "error_type": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[A-Za-z_][A-Za-z0-9_.]*$"
+        }
+      }
+    },
+    "deltaValues": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rx_crc_errors_phy": { "type": "integer" },
+        "rx_discards_phy": { "type": "integer" },
+        "rx_out_of_buffer": { "type": "integer" },
+        "rx_symbol_err_phy": { "type": "integer" },
+        "tx_discards_phy": { "type": "integer" }
+      }
+    },
+    "deltaRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_role", "path", "values"],
+      "properties": {
+        "node_role": { "enum": ["head", "worker"] },
+        "path": { "$ref": "result-v1.schema.json#/$defs/publicLabel" },
+        "values": { "$ref": "#/$defs/deltaValues" }
+      }
+    },
+    "runtimeCounterDelta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "ok"],
+      "properties": {
+        "counter_names": {
+          "type": "array",
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "rx_crc_errors_phy",
+              "rx_discards_phy",
+              "rx_out_of_buffer",
+              "rx_symbol_err_phy",
+              "tx_discards_phy"
+            ]
+          }
+        },
+        "ok": { "type": "boolean" },
+        "status": { "enum": ["passed", "failed", "unavailable"] },
+        "deltas": { "type": "array", "maxItems": 8, "items": { "$ref": "#/$defs/deltaRow" } },
+        "positive_deltas": { "type": "array", "maxItems": 8, "items": { "$ref": "#/$defs/deltaRow" } },
+        "reset_counters": { "type": "array", "maxItems": 8, "items": { "$ref": "#/$defs/deltaRow" } },
+        "reason": { "$ref": "#/$defs/safeReason" }
+      }
+    },
+    "runtimeValidation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preflight", "postflight"],
+      "properties": {
+        "preflight": { "$ref": "#/$defs/runtimeCheck" },
+        "postflight": { "$ref": "#/$defs/runtimeCheck" },
+        "link_error_counter_delta": { "$ref": "#/$defs/runtimeCounterDelta" }
+      }
+    },
+    "pendingQualification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_id", "profile_version", "eligible", "qualified", "status", "reasons", "criteria", "observed"],
+      "properties": {
+        "profile_id": { "const": "dgx-spark-dual-qsfp-standard" },
+        "profile_version": { "const": 1 },
+        "eligible": { "type": "boolean" },
+        "qualified": { "const": false },
+        "status": { "const": "awaiting-measurement-acceptance" },
+        "reasons": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "prefixItems": [{ "const": "measurement-awaiting-postflight" }],
+          "items": { "$ref": "result-v3.schema.json#/$defs/eligibilityReason" }
+        },
+        "criteria": { "$ref": "result-v3.schema.json#/$defs/qualificationCriteria" },
+        "observed": { "$ref": "result-v3.schema.json#/$defs/genericObservation" }
+      }
+    },
+    "unacceptedQualification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profile_id", "profile_version", "eligible", "qualified", "status", "reasons", "criteria", "observed"],
+      "properties": {
+        "profile_id": { "const": "dgx-spark-dual-qsfp-standard" },
+        "profile_version": { "const": 1 },
+        "eligible": { "type": "boolean" },
+        "qualified": { "const": false },
+        "status": { "const": "measurement-unaccepted" },
+        "reasons": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "prefixItems": [{ "const": "measurement-unaccepted" }],
+          "items": { "$ref": "result-v3.schema.json#/$defs/eligibilityReason" }
+        },
+        "criteria": { "$ref": "result-v3.schema.json#/$defs/qualificationCriteria" },
+        "observed": { "$ref": "result-v3.schema.json#/$defs/genericObservation" }
+      }
+    }
+  }
+}

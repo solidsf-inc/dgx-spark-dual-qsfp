@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: >-
+  If this software or its included measurements help your work, please cite
+  the software and identify the exact evidence file you used.
+title: "DGX Spark Dual-QSFP Suite: One ConnectX-7, Four Logical RoCE Devices"
+type: software
+authors:
+  - name: "solidSF, Inc."
+abstract: >-
+  An independent topology-aware utility for validating and measuring two
+  direct QSFP links between a pair of DGX Spark systems, where one ConnectX-7
+  exposes four logical RoCE devices over two PCIe domains.
+license: Apache-2.0
+url: "https://github.com/solidsf-inc/dgx-spark-dual-qsfp"
+repository-code: "https://github.com/solidsf-inc/dgx-spark-dual-qsfp"
+keywords:
+  - DGX Spark
+  - ConnectX-7
+  - RDMA
+  - RoCE
+  - QSFP
+  - network benchmarking

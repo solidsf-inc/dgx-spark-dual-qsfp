@@ -1,0 +1,20 @@
+include CHANGELOG.md
+include CITATION.cff
+include CODE_OF_CONDUCT.md
+include CONTRIBUTING.md
+include LICENSE
+include MAINTAINERS.md
+include Makefile
+include NOTICE
+include README.md
+include RELEASING.md
+include REVIEW_CHECKLIST.md
+include SECURITY.md
+include spark-four-hca
+recursive-include .github *.md *.yml *.yaml
+recursive-include docs *.md
+recursive-include examples *.toml
+recursive-include results *.json *.md SHA256SUMS
+recursive-include schemas *.json
+recursive-include scripts *.py
+recursive-include tests *.py *.txt

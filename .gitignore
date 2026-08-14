@@ -1,0 +1,16 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+dist/
+.coverage
+coverage.xml
+# Raw perftest output can contain fabric addresses and GIDs. Cover the default
+# directory, operator-suffixed variants, and the exact generated file suffixes.
+raw-logs*/
+local-results*/
+*-client.log
+*-server.log
+private-*.toml

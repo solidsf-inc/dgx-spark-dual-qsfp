@@ -1,0 +1,67 @@
+schema_version = 1
+pair_label = "example-pair"
+mtu = 9000
+duration_seconds = 30
+message_size_bytes = 65536
+# Operational default. Topology/control studies explicitly pass --qps 1.
+qps = 2
+base_port = 18515
+
+[nodes.head]
+ssh = "spark-head"
+label = "head"
+cpu_cores = [5, 6, 7, 8]
+
+[nodes.worker]
+ssh = "spark-worker"
+label = "worker"
+cpu_cores = [5, 6, 7, 8]
+
+[[paths]]
+name = "p0-d0"
+physical_port = 0
+pcie_domain = 0
+netdev = "enp1s0f0np0"
+rdma_device = "rocep1s0f0"
+head_address = "192.168.200.1/30"
+worker_address = "192.168.200.2/30"
+
+[[paths]]
+name = "p0-d2"
+physical_port = 0
+pcie_domain = 2
+netdev = "enP2p1s0f0np0"
+rdma_device = "roceP2p1s0f0"
+head_address = "192.168.201.1/30"
+worker_address = "192.168.201.2/30"
+
+[[paths]]
+name = "p1-d0"
+physical_port = 1
+pcie_domain = 0
+netdev = "enp1s0f1np1"
+rdma_device = "rocep1s0f1"
+head_address = "192.168.202.1/30"
+worker_address = "192.168.202.2/30"
+
+[[paths]]
+name = "p1-d2"
+physical_port = 1
+pcie_domain = 2
+netdev = "enP2p1s0f1np1"
+rdma_device = "roceP2p1s0f1"
+head_address = "192.168.203.1/30"
+worker_address = "192.168.203.2/30"
+
+[modes]
+"single-p0-d0" = ["p0-d0"]
+"single-p0-d2" = ["p0-d2"]
+"single-p1-d0" = ["p1-d0"]
+"single-p1-d2" = ["p1-d2"]
+"same-cage-p0" = ["p0-d0", "p0-d2"]
+"same-cage-p1" = ["p1-d0", "p1-d2"]
+"same-domain-d0" = ["p0-d0", "p1-d0"]
+"same-domain-d2" = ["p0-d2", "p1-d2"]
+"diagonal-a" = ["p0-d0", "p1-d2"]
+"diagonal-b" = ["p1-d0", "p0-d2"]
+"all-four" = ["p0-d0", "p0-d2", "p1-d0", "p1-d2"]
