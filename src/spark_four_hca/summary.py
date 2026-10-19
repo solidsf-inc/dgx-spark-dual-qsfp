@@ -137,7 +137,10 @@ def _integer(value: object, context: str, *, minimum: int = 0) -> int:
 def _number(value: object, context: str, *, positive: bool = False) -> float:
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise SummaryError(f"{context} must be a finite number")
-    parsed = float(value)
+    try:
+        parsed = float(value)
+    except OverflowError as exc:
+        raise SummaryError(f"{context} must be a finite number") from exc
     if not math.isfinite(parsed) or parsed < 0 or (positive and parsed <= 0):
         qualifier = "positive and " if positive else "non-negative and "
         raise SummaryError(f"{context} must be {qualifier}finite")

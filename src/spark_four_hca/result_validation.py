@@ -158,7 +158,10 @@ def _integer(
 def _number(value: object, context: str, *, minimum: float = 0.0) -> float:
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         _fail(context, "must be a finite number")
-    parsed = float(value)
+    try:
+        parsed = float(value)
+    except OverflowError as exc:
+        raise ResultValidationError(f"{context}: must be a finite number") from exc
     if not math.isfinite(parsed) or parsed < minimum:
         _fail(context, f"must be finite and >= {minimum}")
     return parsed

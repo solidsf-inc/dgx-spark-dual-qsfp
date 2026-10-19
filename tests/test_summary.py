@@ -110,6 +110,14 @@ def _v3_payload(*, median: float = 225.0) -> dict:
 
 
 class SummaryTests(unittest.TestCase):
+    def test_rejects_integer_outside_float_range(self):
+        for value in (10**400, -(10**400)):
+            with self.subTest(value_sign=value > 0):
+                payload = _payload()
+                payload["summaries"][0]["median_gbps"] = value
+                with self.assertRaisesRegex(SummaryError, "median_gbps.*finite"):
+                    parse_result(payload)
+
     def test_renders_table_and_relative_difference_from_allowlisted_aggregates(self):
         markdown = render_markdown(parse_result(_payload()))
         self.assertIn("| diagonal-a | worker-to-head | 65,536 | 2 |", markdown)

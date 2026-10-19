@@ -20,6 +20,14 @@ RESULTS = ROOT / "results"
 
 
 class ResultValidationTests(unittest.TestCase):
+    def test_rejects_integer_outside_float_range(self):
+        for value in (10**400, -(10**400)):
+            with self.subTest(value_sign=value > 0):
+                payload = _current_v3_payload()
+                payload["trials"][0]["aggregate_gbps"] = value
+                with self.assertRaisesRegex(ResultValidationError, "aggregate_gbps.*finite"):
+                    validate_result(payload)
+
     def test_all_recorded_v1_results_pass_semantic_validation(self):
         sources = sorted(RESULTS.glob("*.json"))
         self.assertEqual(len(sources), 3)

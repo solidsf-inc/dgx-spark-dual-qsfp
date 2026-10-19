@@ -8,6 +8,7 @@ from unittest.mock import patch
 
 from spark_four_hca import __version__
 from spark_four_hca.cli import main
+from test_schemas import _current_v3_payload
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -100,6 +101,22 @@ def _matrix_result(*, standard: bool = False, median: float = 220.0) -> dict:
 
 
 class CliTests(unittest.TestCase):
+    def test_result_commands_report_oversized_integer_as_validation_error(self):
+        payload = _current_v3_payload()
+        payload["trials"][0]["aggregate_gbps"] = 10**400
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "oversized.json"
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            for command in ("validate-result", "summarize"):
+                with self.subTest(command=command):
+                    stderr = StringIO()
+                    with redirect_stderr(stderr), redirect_stdout(StringIO()):
+                        code = main([command, "--input", str(path)])
+                    self.assertEqual(code, 2)
+                    self.assertIn("aggregate_gbps", stderr.getvalue())
+                    self.assertIn("finite", stderr.getvalue())
+                    self.assertNotIn(str(10**400), stderr.getvalue())
+
     def test_version_uses_package_single_source(self):
         output = StringIO()
         with redirect_stdout(output), self.assertRaises(SystemExit) as raised:
